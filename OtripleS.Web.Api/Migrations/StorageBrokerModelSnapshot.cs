@@ -15,16 +15,16 @@ namespace OtripleS.Web.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -47,7 +47,7 @@ namespace OtripleS.Web.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -155,6 +155,41 @@ namespace OtripleS.Web.Api.Migrations
                     b.ToTable("Assignments");
                 });
 
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Attendances.Attendance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("AttendanceDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StudentSemesterCourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attendances");
+                });
+
             modelBuilder.Entity("OtripleS.Web.Api.Models.Classrooms.Classroom", b =>
                 {
                     b.Property<Guid>("Id")
@@ -187,6 +222,41 @@ namespace OtripleS.Web.Api.Migrations
                     b.ToTable("Classrooms");
                 });
 
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Contacts.Contact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Information")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("OtripleS.Web.Api.Models.Courses.Course", b =>
                 {
                     b.Property<Guid>("Id")
@@ -217,6 +287,35 @@ namespace OtripleS.Web.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Guardians.Guardian", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("FamilyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Guardians");
                 });
 
             modelBuilder.Entity("OtripleS.Web.Api.Models.SemesterCourses.SemesterCourse", b =>
@@ -264,6 +363,57 @@ namespace OtripleS.Web.Api.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("SemesterCourses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.StudentContacts.StudentContact", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContactId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("StudentId", "ContactId");
+
+                    b.HasIndex("ContactId");
+
+                    b.ToTable("StudentContacts");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.StudentGuardians.StudentGuardian", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GuardianId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsPrimaryContact")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Relationship")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("StudentId", "GuardianId");
+
+                    b.HasIndex("GuardianId");
+
+                    b.ToTable("StudentGuardians");
                 });
 
             modelBuilder.Entity("OtripleS.Web.Api.Models.StudentSemesterCourses.StudentSemesterCourse", b =>
@@ -404,18 +554,18 @@ namespace OtripleS.Web.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -438,8 +588,8 @@ namespace OtripleS.Web.Api.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -457,12 +607,12 @@ namespace OtripleS.Web.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -486,17 +636,17 @@ namespace OtripleS.Web.Api.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -572,6 +722,50 @@ namespace OtripleS.Web.Api.Migrations
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Classroom");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.StudentContacts.StudentContact", b =>
+                {
+                    b.HasOne("OtripleS.Web.Api.Models.Contacts.Contact", "Contact")
+                        .WithMany("StudentContacts")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("OtripleS.Web.Api.Models.Students.Student", "Student")
+                        .WithMany("StudentContacts")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.StudentGuardians.StudentGuardian", b =>
+                {
+                    b.HasOne("OtripleS.Web.Api.Models.Guardians.Guardian", "Guardian")
+                        .WithMany("StudentGuardians")
+                        .HasForeignKey("GuardianId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("OtripleS.Web.Api.Models.Students.Student", "Student")
+                        .WithMany("StudentGuardians")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Guardian");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("OtripleS.Web.Api.Models.StudentSemesterCourses.StudentSemesterCourse", b =>
@@ -587,6 +781,49 @@ namespace OtripleS.Web.Api.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("SemesterCourse");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Classrooms.Classroom", b =>
+                {
+                    b.Navigation("SemesterCourses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Contacts.Contact", b =>
+                {
+                    b.Navigation("StudentContacts");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Courses.Course", b =>
+                {
+                    b.Navigation("SemesterCourses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Guardians.Guardian", b =>
+                {
+                    b.Navigation("StudentGuardians");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.SemesterCourses.SemesterCourse", b =>
+                {
+                    b.Navigation("StudentSemesterCourses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Students.Student", b =>
+                {
+                    b.Navigation("StudentContacts");
+
+                    b.Navigation("StudentGuardians");
+
+                    b.Navigation("StudentSemesterCourses");
+                });
+
+            modelBuilder.Entity("OtripleS.Web.Api.Models.Teachers.Teacher", b =>
+                {
+                    b.Navigation("SemesterCourses");
                 });
 #pragma warning restore 612, 618
         }

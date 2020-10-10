@@ -5,6 +5,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,13 +14,21 @@ using Newtonsoft.Json;
 using OtripleS.Web.Api.Brokers.DateTimes;
 using OtripleS.Web.Api.Brokers.Loggings;
 using OtripleS.Web.Api.Brokers.Storage;
+using OtripleS.Web.Api.Brokers.UserManagement;
+using OtripleS.Web.Api.Models.Users;
 using OtripleS.Web.Api.Services.Assignments;
+using OtripleS.Web.Api.Services.Attendances;
 using OtripleS.Web.Api.Services.Classrooms;
+using OtripleS.Web.Api.Services.Contacts;
 using OtripleS.Web.Api.Services.Courses;
+using OtripleS.Web.Api.Services.Guardians;
 using OtripleS.Web.Api.Services.SemesterCourses;
+using OtripleS.Web.Api.Services.StudentContacts;
+using OtripleS.Web.Api.Services.StudentGuardians;
 using OtripleS.Web.Api.Services.Students;
 using OtripleS.Web.Api.Services.StudentSemesterCourses;
 using OtripleS.Web.Api.Services.Teachers;
+using OtripleS.Web.Api.Services.Users;
 
 namespace OtripleS.Web.Api
 {
@@ -42,6 +51,7 @@ namespace OtripleS.Web.Api
             });
 
             services.AddDbContext<StorageBroker>();
+            services.AddScoped<IUserManagementBroker, UserManagementBroker>();
             services.AddScoped<IStorageBroker, StorageBroker>();
             services.AddTransient<ILogger, Logger<LoggingBroker>>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
@@ -53,6 +63,17 @@ namespace OtripleS.Web.Api
             services.AddTransient<IAssignmentService, AssignmentService>();
             services.AddTransient<ISemesterCourseService, SemesterCourseService>();
             services.AddTransient<IStudentSemesterCourseService, StudentSemesterCourseService>();
+            services.AddTransient<IAttendanceService, AttendanceService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IGuardianService, GuardianService>();
+            services.AddTransient<IStudentGuardianService, StudentGuardianService>();
+            services.AddTransient<IContactService, ContactService>();
+            services.AddTransient<IStudentContactService, StudentContactService>();
+
+            services.AddIdentityCore<User>()
+                    .AddRoles<Role>()
+                    .AddEntityFrameworkStores<StorageBroker>()
+                    .AddDefaultTokenProviders();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

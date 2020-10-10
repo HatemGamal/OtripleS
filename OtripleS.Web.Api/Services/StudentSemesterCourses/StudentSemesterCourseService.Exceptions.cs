@@ -33,12 +33,13 @@ namespace OtripleS.Web.Api.Services.StudentSemesterCourses
             catch (DbUpdateException dbUpdateException)
             {
                 throw CreateAndLogDependencyException(dbUpdateException);
-            }catch (Exception exception)
+            }
+            catch (Exception exception)
             {
                 throw CreateAndLogServiceException(exception);
             }
         }
-        
+
         private async ValueTask<StudentSemesterCourse> TryCatch(
             ReturningStudentSemesterCourseFunction returningStudentSemesterCourseFunction)
         {
@@ -71,7 +72,7 @@ namespace OtripleS.Web.Api.Services.StudentSemesterCourses
             }
             catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
             {
-                var lockedSemesterCourseException = 
+                var lockedSemesterCourseException =
                     new LockedStudentSemesterCourseException(dbUpdateConcurrencyException);
 
                 throw CreateAndLogDependencyException(lockedSemesterCourseException);

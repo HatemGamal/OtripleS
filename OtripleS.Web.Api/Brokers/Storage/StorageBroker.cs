@@ -3,12 +3,11 @@
 // FREE TO USE AS LONG AS SOFTWARE FUNDS ARE DONATED TO THE POOR
 // ---------------------------------------------------------------
 
-using System;
 using EFxceptions.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OtripleS.Web.Api.Models.Users;
+using System;
 
 namespace OtripleS.Web.Api.Brokers.Storage
 {
@@ -27,6 +26,8 @@ namespace OtripleS.Web.Api.Brokers.Storage
             base.OnModelCreating(modelBuilder);
             AddSemesterCourseReferences(modelBuilder);
             AddStudentSemesterCourseReferences(modelBuilder);
+            AddStudentGuardianReferences(modelBuilder);
+            AddStudentContactReferences(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -3,12 +3,12 @@
 // FREE TO USE AS LONG AS SOFTWARE FUNDS ARE DONATED TO THE POOR
 //----------------------------------------------------------------
 
-using System;
-using System.Linq;
 using OtripleS.Web.Api.Brokers.DateTimes;
 using OtripleS.Web.Api.Brokers.Loggings;
 using OtripleS.Web.Api.Brokers.Storage;
 using OtripleS.Web.Api.Models.StudentSemesterCourses;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OtripleS.Web.Api.Services.StudentSemesterCourses
@@ -61,8 +61,8 @@ namespace OtripleS.Web.Api.Services.StudentSemesterCourses
                         studentSemesterCourse.SemesterCourseId);
 
                 ValidateStorageStudentSemesterCourse(
-                    maybeStudentSemesterCourse, 
-                    studentSemesterCourse.StudentId, 
+                    maybeStudentSemesterCourse,
+                    studentSemesterCourse.StudentId,
                     studentSemesterCourse.SemesterCourseId);
 
                 ValidateAgainstStorageStudentSemesterCourseOnModify(
@@ -95,7 +95,7 @@ namespace OtripleS.Web.Api.Services.StudentSemesterCourses
 
                 StudentSemesterCourse studentSemesterCourse =
                     await this.storageBroker.SelectStudentSemesterCourseByIdAsync(semesterCourseId, studentId);
-                
+
                 ValidateStorageStudentSemesterCourse(studentSemesterCourse, semesterCourseId, studentId);
 
                 return await this.storageBroker.DeleteStudentSemesterCourseAsync(studentSemesterCourse);

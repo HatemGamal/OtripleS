@@ -3,10 +3,10 @@
 // FREE TO USE AS LONG AS SOFTWARE FUNDS ARE DONATED TO THE POOR
 // ---------------------------------------------------------------
 
-using System;
-using System.Linq;
 using OtripleS.Web.Api.Models.Users;
 using OtripleS.Web.Api.Models.Users.Exceptions;
+using System;
+using System.Linq;
 
 namespace OtripleS.Web.Api.Services.Users
 {
@@ -123,7 +123,7 @@ namespace OtripleS.Web.Api.Services.Users
             int oneMinute = 1;
             TimeSpan difference = now.Subtract(dateTime);
 
-            return Math.Abs(difference.TotalMinutes) > oneMinute;
+            return Math.Abs(difference.TotalMinutes) >= oneMinute;
         }
 
         private void ValidateStorageUsers(IQueryable<User> storageUsers)
